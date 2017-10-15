@@ -29,15 +29,15 @@ RUN useradd -m -d /home/jenkins -s /bin/zsh jenkins \
  && echo "jenkins:jenkins" | chpasswd \
  && chown jenkins:jenkins /home/jenkins -R \
  && mkdir -p /data/jenkins-work \
- && chown -R jenkins:jenkins /data \
  && usermod -u ${UID} jenkins
 RUN pacman -Syyu --noconfirm jre8-openjdk
 
-# Switch to user jenkins
-USER jenkins
-
 # Start swarm client
 ADD "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_PLUGIN_VERSION}/swarm-client-${SWARM_PLUGIN_VERSION}.jar" /data/swarm-client.jar
+RUN chown -R jenkins:jenkins /data
+
+# Switch to user jenkins
+USER jenkins
 
 # Start ssh
 #CMD ["/usr/sbin/sshd", "-D"]
