@@ -1,4 +1,4 @@
-FROM starwarsfan/fli4l-packaging:latest
+FROM starwarsfan/fli4l-packaging-container:latest
 MAINTAINER Yves Schumann <yves@eisfair.org>
 
 # Configuration for Jenkins swarm
