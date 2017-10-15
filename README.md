@@ -1,6 +1,6 @@
 ## Docker container for packaging of fli4l 
  
- This is a docker implementation of all required tools to package fli4l opts.
+ This is a docker implementation a fli4l package buildnode for Jenkins.
 
  For more information please refer to [Official website](http://www.fli4l.de/) or [Support forum](https://forum.nettworks.org)
 
@@ -34,7 +34,7 @@ You now have two options:
 #### 2a Image from Docker Hub
 
 ```shell
-sudo docker pull starwarsfan/fli4l-packaging
+sudo docker pull starwarsfan/fli4l-packaging-buildnode
 ```
 
 #### 2b Build from scratch
@@ -42,20 +42,20 @@ sudo docker pull starwarsfan/fli4l-packaging
 ##### Pull repo from github
 
 ```shell
-sudo git clone https://github.com/starwarsfan/fli4l-packaging-container.git
-cd fli4l-packaging-container
+sudo git clone https://github.com/starwarsfan/fli4l-packaging-buildnode.git
+cd fli4l-packaging-buildnode
 ```
 
 ##### Build image
 
 ```shell
-sudo docker build -t starwarsfan/fli4l-packaging:latest .
+sudo docker build -t starwarsfan/fli4l-packaging-buildnode:latest .
 ```
 
 ### 3. Starting docker container
 
 ```shell
-sudo docker run --name fli4l-packaging -d starwarsfan/fli4l-packaging:latest
+sudo docker run --name fli4l-packaging-buildnode -d starwarsfan/fli4l-packaging:latest
 ```
 
 #### 3.a Mount volume or folder for svn checkout
@@ -64,7 +64,7 @@ With the additional run parameter _-v <host-folder>:/opt/svn-checkout/_ you can 
 host which contains the the svn checkout outside of the container. So the run command may look like the following example:
 
 ```shell
-sudo docker run --name fli4l-packaging -v /data/svn-checkout/:/opt/svn-checkout/ ...
+sudo docker run --name fli4l-packaging-buildnode -v /data/svn-checkout/:/opt/svn-checkout/ ...
 ```
 
 ### 4. Useful commands
@@ -78,23 +78,23 @@ sudo docker ps -a
 Stop the container
 
 ```shell
-sudo docker stop fli4l-packaging
+sudo docker stop fli4l-packaging-buildnode
 ```
 
 Start the container
 
 ```shell
-sudo docker start fli4l-packaging
+sudo docker start fli4l-packaging-buildnode
 ```
 
 Get logs from container
 
 ```shell
-sudo docker logs -f fli4l-packaging
+sudo docker logs -f fli4l-packaging-buildnode
 ```
 
 Open cmdline inside of container
 
 ```shell
-sudo docker exec -i -t fli4l-packaging /bin/bash
+sudo docker exec -i -t fli4l-packaging-buildnode /bin/bash
 ```
