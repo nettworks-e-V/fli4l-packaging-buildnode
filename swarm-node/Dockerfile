@@ -19,13 +19,14 @@ ENV JENKINS_URL=http://$JENKINS_IP \
     EXECUTORS=1 \
     DESCRIPTION=$DESCRIPTION \
     LABELS=$LABELS \
-    NAME=$NAME
+    NAME=$NAME \
+    SWARM_PLUGIN_VERSION=3.5
 
 # change user UID
 RUN usermod -u ${UID} jenkins
 
 # Start swarm client
-ADD "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.4/swarm-client-3.4.jar" /data/swarm-client.jar
+ADD "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_PLUGIN_VERSION}/swarm-client-${SWARM_PLUGIN_VERSION}.jar" /data/swarm-client.jar
 RUN chown jenkins:jenkins /data/ -R
 RUN chown jenkins:jenkins /home/jenkins -R
 
