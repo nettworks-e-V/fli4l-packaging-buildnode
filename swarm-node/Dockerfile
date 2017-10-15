@@ -22,13 +22,18 @@ ENV JENKINS_URL=http://$JENKINS_IP \
     NAME=$NAME \
     SWARM_PLUGIN_VERSION=3.5
 
+# Setup jenkins account
+# Create working directory
 # change user UID
-RUN usermod -u ${UID} jenkins
+RUN useradd -m -d /home/jenkins -s /bin/zsh jenkins \
+ && echo "jenkins:jenkins" | chpasswd \
+ && chown jenkins:jenkins /home/jenkins -R \
+ && mkdir -p /data/jenkins-work \
+ && chown -R jenkins:jenkins /data \
+ && usermod -u ${UID} jenkins
 
 # Start swarm client
 ADD "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_PLUGIN_VERSION}/swarm-client-${SWARM_PLUGIN_VERSION}.jar" /data/swarm-client.jar
-RUN chown jenkins:jenkins /data/ -R
-RUN chown jenkins:jenkins /home/jenkins -R
 
 USER jenkins
 # Start ssh
