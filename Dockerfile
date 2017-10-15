@@ -31,7 +31,6 @@ RUN useradd -m -d /home/jenkins -s /bin/zsh jenkins \
  && mkdir -p /data/jenkins-work \
  && chown -R jenkins:jenkins /data \
  && usermod -u ${UID} jenkins
-#RUN pacman -Syyu
 RUN pacman -Syyu --noconfirm jre8-openjdk
 
 # Start swarm client
