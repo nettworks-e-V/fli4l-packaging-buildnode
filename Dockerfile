@@ -33,10 +33,12 @@ RUN useradd -m -d /home/jenkins -s /bin/zsh jenkins \
  && usermod -u ${UID} jenkins
 RUN pacman -Syyu --noconfirm jre8-openjdk
 
+# Switch to user jenkins
+USER jenkins
+
 # Start swarm client
 ADD "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_PLUGIN_VERSION}/swarm-client-${SWARM_PLUGIN_VERSION}.jar" /data/swarm-client.jar
 
-USER jenkins
 # Start ssh
 #CMD ["/usr/sbin/sshd", "-D"]
 
