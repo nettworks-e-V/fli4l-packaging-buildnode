@@ -3,7 +3,7 @@ MAINTAINER Yves Schumann <yves@eisfair.org>
 
 # Configuration for Jenkins swarm
 
-# Default values
+# Default values for potential build time parameters
 ARG JENKINS_IP="localhost"
 ARG USERNAME="admin"
 ARG PASSWORD="admin"
@@ -24,12 +24,14 @@ ENV JENKINS_URL=http://$JENKINS_IP \
 
 # Setup jenkins account
 # Create working directory
-# change user UID
+# Change user UID
+# Fix ulimit issue regarding start of java on arch linux
 RUN useradd -m -d /home/jenkins -s /bin/zsh jenkins \
  && echo "jenkins:jenkins" | chpasswd \
  && chown jenkins:jenkins /home/jenkins -R \
  && mkdir -p /data/jenkins-work \
- && usermod -u ${UID} jenkins
+ && usermod -u ${UID} jenkins \
+ && ulimit -v unlimited
 RUN pacman -Syyu --noconfirm jre8-openjdk
 
 # Start swarm client
