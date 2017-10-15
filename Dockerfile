@@ -32,7 +32,11 @@ RUN useradd -m -d /home/jenkins -s /bin/zsh jenkins \
  && mkdir -p /data/jenkins-work \
  && usermod -u ${UID} jenkins \
  && ulimit -v unlimited
-RUN pacman -Syyu --noconfirm jre8-openjdk
+
+# Install OpenJDK and fix pax headers
+# See https://stackoverflow.com/questions/27262629/jvm-cant-map-reserved-memory-when-running-in-docker-container
+RUN pacman -Syyu --noconfirm jre8-openjdk \
+ && setfattr -n user.pax.flags -v "mr" /usr/bin/java
 
 # Start swarm client
 ADD "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_PLUGIN_VERSION}/swarm-client-${SWARM_PLUGIN_VERSION}.jar" /data/swarm-client.jar
