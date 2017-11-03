@@ -25,18 +25,17 @@ ENV JENKINS_URL=http://$JENKINS_IP \
 # Setup jenkins account
 # Create working directory
 # Change user UID
-# Fix ulimit issue regarding start of java on arch linux
-RUN useradd -m -d /home/jenkins -s /bin/zsh jenkins \
+RUN useradd --create-home --home-dir /home/jenkins --shell /bin/bash --uid ${UID} jenkins \
  && echo "jenkins:jenkins" | chpasswd \
  && chown jenkins:jenkins /home/jenkins -R \
  && mkdir -p /data/jenkins-work \
- && usermod -u ${UID} jenkins \
  && ulimit -v unlimited
 
-# Install OpenJDK and fix pax headers
-# See https://stackoverflow.com/questions/27262629/jvm-cant-map-reserved-memory-when-running-in-docker-container
-RUN pacman -Syyu --noconfirm jre8-openjdk \
- && setfattr -n user.pax.flags -v "mr" /usr/bin/java
+RUN apt-get autoremove \
+ && apt-get clean \
+ && apt-get update \
+ && apt-get install -y \
+    default-jdk
 
 # Start swarm client
 ADD "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_PLUGIN_VERSION}/swarm-client-${SWARM_PLUGIN_VERSION}.jar" /data/swarm-client.jar
