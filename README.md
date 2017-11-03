@@ -2,11 +2,13 @@
  
  This is a docker implementation a fli4l package buildnode for Jenkins.
 
- For more information please refer to [Official website](http://www.fli4l.de/) or [Support forum](https://forum.nettworks.org)
+ For more information please refer to [Official website](http://www.fli4l.de/) 
+ or [Support forum](https://forum.nettworks.org)
 
 ### 1. Install docker
 
- This instruction works for a <b>Centos7</b> docker host. Other distributions may need some adjustments.
+ This instruction works for a <b>Centos7</b> docker host. Other distributions 
+ may need some adjustments.
 
 ```shell
 sudo tee /etc/yum.repos.d/docker.repo <<-'EOF'
@@ -55,16 +57,43 @@ sudo docker build -t starwarsfan/fli4l-packaging-buildnode:latest .
 ### 3. Starting docker container
 
 ```shell
-sudo docker run --name fli4l-packaging-buildnode -d starwarsfan/fli4l-packaging:latest
+sudo docker run \
+    --name fli4l-packaging-buildnode \
+    -d \
+    starwarsfan/fli4l-packaging-buildnode:latest
 ```
 
 #### 3.a Mount volume or folder for svn checkout
 
-With the additional run parameter _-v <host-folder>:/opt/svn-checkout/_ you can mount a folder on the docker 
-host which contains the the svn checkout outside of the container. So the run command may look like the following example:
+With the additional run parameter _-v <host-folder>:/data/work/_ you can mount 
+a folder on the docker host which contains the the svn checkout outside of the
+container. So the run command may look like the following example:
 
 ```shell
-sudo docker run --name fli4l-packaging-buildnode -v /data/svn-checkout/:/opt/svn-checkout/ ...
+sudo docker run \
+    --name fli4l-packaging-buildnode \
+    -v /data/svn-checkout/:/data/work/ ...
+```
+
+#### 3.b Available options
+
+The container could be startet with some of the following options. These list 
+contains the default values, which could be overwritten on the docker run
+command: 
+
+ * JENKINS_URL=http://localhost
+ * JENKINS_USERNAME=admin
+ * JENKINS_PASSWORD=admin
+ * EXECUTORS=1
+ * DESCRIPTION=Swarm node with fli4l buildroot
+ * LABELS=linux swarm fli4l-buildroot
+ * NAME=generic-swarm-node
+
+```shell
+sudo docker run \
+    --name fli4l-packaging-buildnode \
+    -e "JENKINS_URL=https://jenkins.foobar.org" \
+    -e "JENKINS_PASSWORD=123456" ...
 ```
 
 ### 4. Useful commands
