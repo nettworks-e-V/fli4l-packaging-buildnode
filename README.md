@@ -97,6 +97,28 @@ sudo docker run \
     -e "JENKINS_PASSWORD=123456" ...
 ```
 
+#### 3.c Jenkins behind reverse proxy
+
+The option JENKINS_TUNNEL might be neccessary if Jenkins is running behind
+a reverse proxy as the JNLP connection could not be established in such a 
+setup. You need to configure the following on Jenkins:
+ 
+ * Configuration > Global Security > Agents
+ * Set _TCP port for JNLP agents_ to _Static_
+ * Enter a port number like _32775_
+ * Save configuration
+
+Assumed your Jenkins is available on https://jenkins.foobar.org, the host has 
+the ip 10.20.30.40 and you configured the JNLP port 32775, you need to start 
+the container with at least these options:
+
+```shell
+sudo docker run \
+    --name fli4l-buildroot-buildnode \
+    -e "JENKINS_URL=https://jenkins.foobar.org" \
+    -e "JENKINS_TUNNEL=10.20.30.40:32775" ...
+```
+
 ### 4. Useful commands
 
 Check running / stopped container:
