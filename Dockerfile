@@ -10,7 +10,7 @@ ARG USERNAME="admin"
 ARG PASSWORD="admin"
 ARG DESCRIPTION="Swarm node for fli4l-packaging"
 ARG LABELS="linux swarm fli4l-packaging"
-ARG NAME="generic-swarm-node"
+ARG NAME="fli4l-packaging-swarm-node"
 ARG UID="1000"
 
 # Environment variables for swarm client
