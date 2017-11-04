@@ -5,6 +5,7 @@ MAINTAINER Yves Schumann <yves@eisfair.org>
 
 # Default values for potential build time parameters
 ARG JENKINS_IP="localhost"
+ARG JENKINS_TUNNEL=""
 ARG USERNAME="admin"
 ARG PASSWORD="admin"
 ARG DESCRIPTION="Swarm node for fli4l-packaging"
@@ -14,6 +15,7 @@ ARG UID="1000"
 
 # Environment variables for swarm client
 ENV JENKINS_URL=http://$JENKINS_IP \
+    JENKINS_TUNNEL=$JENKINS_TUNNEL \
     JENKINS_USERNAME=$USERNAME \
     JENKINS_PASSWORD=$PASSWORD \
     EXECUTORS=1 \
@@ -54,6 +56,7 @@ CMD java \
     -description "${DESCRIPTION}" \
     -fsroot /data/jenkins-work \
     -master "${JENKINS_URL}" \
+    -tunnel "${JENKINS_TUNNEL}" \
     -username "${JENKINS_USERNAME}" \
     -password "${JENKINS_PASSWORD}" \
     -labels "${LABELS}" \

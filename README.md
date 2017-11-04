@@ -82,6 +82,7 @@ contains the default values, which could be overwritten on the docker run
 command: 
 
  * JENKINS_URL=http://localhost
+ * JENKINS_TUNNEL=
  * JENKINS_USERNAME=admin
  * JENKINS_PASSWORD=admin
  * EXECUTORS=1
