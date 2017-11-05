@@ -22,7 +22,8 @@ ENV JENKINS_URL=http://$JENKINS_IP \
     DESCRIPTION=$DESCRIPTION \
     LABELS=$LABELS \
     NAME=$NAME \
-    SWARM_PLUGIN_VERSION=3.5
+    SWARM_PLUGIN_VERSION=3.5 \
+    WORK_DIR=/data/work
 
 # Setup jenkins account
 # Create working directory
@@ -30,7 +31,6 @@ ENV JENKINS_URL=http://$JENKINS_IP \
 RUN useradd --create-home --home-dir /home/jenkins --shell /bin/bash --uid ${UID} jenkins \
  && echo "jenkins:jenkins" | chpasswd \
  && chown jenkins:jenkins /home/jenkins -R \
- && mkdir -p /data/jenkins-work \
  && ulimit -v unlimited
 
 RUN apt-get autoremove \
@@ -39,7 +39,10 @@ RUN apt-get autoremove \
  && apt-get install -y \
     default-jdk
 
-# Start swarm client
+# Mount point for Jenkins .ssh folder
+VOLUME /home/jenkins/.ssh
+
+# Install swarm client
 ADD "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_PLUGIN_VERSION}/swarm-client-${SWARM_PLUGIN_VERSION}.jar" /data/swarm-client.jar
 RUN chown -R jenkins:jenkins /data
 
@@ -54,7 +57,7 @@ CMD java \
     -executors "${EXECUTORS}" \
     -noRetryAfterConnected \
     -description "${DESCRIPTION}" \
-    -fsroot /data/jenkins-work \
+    -fsroot "${WORK_DIR}" \
     -master "${JENKINS_URL}" \
     -tunnel "${JENKINS_TUNNEL}" \
     -username "${JENKINS_USERNAME}" \

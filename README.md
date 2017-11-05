@@ -63,11 +63,20 @@ sudo docker run \
     starwarsfan/fli4l-packaging-buildnode:latest
 ```
 
-#### 3.a Mount volume or folder for svn checkout
+#### 3.a Mountpoints
+
+There are the following mountpoints available:
+
+ * /data/work/
+ * /home/jenkins/.ssh/
+
+These mountpoints can be used to mount folders from the host or other volumes
+to store informations which should be persistant or should not everytime be 
+recreated.
 
 With the additional run parameter _-v <host-folder>:/data/work/_ you can mount 
-a folder on the docker host which contains the the svn checkout outside of the
-container. So the run command may look like the following example:
+a folder on the docker host which contains persistant data. So the run command 
+may look like the following example:
 
 ```shell
 sudo docker run \
