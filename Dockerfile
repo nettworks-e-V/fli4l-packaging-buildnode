@@ -24,7 +24,7 @@ ENV JENKINS_URL=http://$JENKINS_IP \
     NAME=$NAME \
     SWARM_PLUGIN_VERSION=3.5 \
     WORK_DIR=/data/work \
-    SHARED_DIR=/data/shared/fli4l \
+    SHARED_DIR=/data/shared/fli4l
 
 # Setup jenkins account
 # Create working directory
