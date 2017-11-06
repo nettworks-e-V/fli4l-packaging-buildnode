@@ -48,7 +48,7 @@ ADD "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${
 
 # Link ~/.fbr to shared location and update ownership
 RUN mkdir -p ${SHARED_DIR}/.fbr \
- && ln -s ${SHARED_DIR}/.fbr /home/jenkins/.fbr
+ && ln -s ${SHARED_DIR}/.fbr /home/jenkins/.fbr \
  && chown -R jenkins:jenkins /data
 
 # Switch to user jenkins
