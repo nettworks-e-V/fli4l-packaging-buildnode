@@ -68,6 +68,7 @@ sudo docker run \
 There are the following mountpoints available:
 
  * /data/work/
+ * /data/shared/fli4l/
  * /home/jenkins/.ssh/
 
 These mountpoints can be used to mount folders from the host or other volumes

@@ -23,7 +23,8 @@ ENV JENKINS_URL=http://$JENKINS_IP \
     LABELS=$LABELS \
     NAME=$NAME \
     SWARM_PLUGIN_VERSION=3.5 \
-    WORK_DIR=/data/work
+    WORK_DIR=/data/work \
+    SHARED_DIR=/data/shared/fli4l \
 
 # Setup jenkins account
 # Create working directory
@@ -48,6 +49,10 @@ RUN chown -R jenkins:jenkins /data
 
 # Switch to user jenkins
 USER jenkins
+
+# Link ~/.fbr to shared location
+RUN mkdir -p ${SHARED_DIR}/.fbr \
+ && ln -s ${SHARED_DIR}/.fbr /home/jenkins/.fbr
 
 # Start ssh
 #CMD ["/usr/sbin/sshd", "-D"]
