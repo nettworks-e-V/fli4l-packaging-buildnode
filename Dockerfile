@@ -45,14 +45,14 @@ VOLUME /home/jenkins/.ssh
 
 # Install swarm client
 ADD "https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_PLUGIN_VERSION}/swarm-client-${SWARM_PLUGIN_VERSION}.jar" /data/swarm-client.jar
-RUN chown -R jenkins:jenkins /data
+
+# Link ~/.fbr to shared location and update ownership
+RUN mkdir -p ${SHARED_DIR}/.fbr \
+ && ln -s ${SHARED_DIR}/.fbr /home/jenkins/.fbr
+ && chown -R jenkins:jenkins /data
 
 # Switch to user jenkins
 USER jenkins
-
-# Link ~/.fbr to shared location
-RUN mkdir -p ${SHARED_DIR}/.fbr \
- && ln -s ${SHARED_DIR}/.fbr /home/jenkins/.fbr
 
 # Start ssh
 #CMD ["/usr/sbin/sshd", "-D"]
