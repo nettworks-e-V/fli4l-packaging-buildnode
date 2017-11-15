@@ -12,6 +12,7 @@ ARG DESCRIPTION="Swarm node for fli4l-packaging"
 ARG LABELS="linux swarm fli4l-packaging"
 ARG NAME="fli4l-packaging-swarm-node"
 ARG UID="1010"
+ARG GID="1001"
 
 # Environment variables for swarm client
 ENV JENKINS_URL=http://$JENKINS_IP \
@@ -28,8 +29,9 @@ ENV JENKINS_URL=http://$JENKINS_IP \
 
 # Setup jenkins account
 # Create working directory
-# Change user UID
-RUN useradd --create-home --home-dir /home/jenkins --shell /bin/bash --uid ${UID} jenkins \
+# Change user UID and GID
+RUN groupadd --gid ${GID} jenkins \
+ && useradd --create-home --home-dir /home/jenkins --shell /bin/bash --uid ${UID} --gid ${GID} jenkins \
  && echo "jenkins:jenkins" | chpasswd \
  && chown jenkins:jenkins /home/jenkins -R \
  && ulimit -v unlimited
