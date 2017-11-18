@@ -12,7 +12,7 @@ ARG DESCRIPTION="Swarm node for fli4l-packaging"
 ARG LABELS="linux swarm fli4l-packaging"
 ARG NAME="fli4l-packaging-swarm-node"
 ARG UID="1010"
-ARG GID="1001"
+ARG GID="1010"
 
 # Environment variables for swarm client
 ENV JENKINS_URL=http://$JENKINS_IP \
