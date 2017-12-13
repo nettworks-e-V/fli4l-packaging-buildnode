@@ -30,10 +30,10 @@ ENV JENKINS_URL=http://$JENKINS_IP \
 # Setup jenkins account
 # Create working directory
 # Change user UID and GID
-RUN groupadd --gid ${GID} jenkins \
+RUN groupadd --gid ${GID} fleis \
  && useradd --create-home --home-dir /home/jenkins --shell /bin/bash --uid ${UID} --gid ${GID} jenkins \
  && echo "jenkins:jenkins" | chpasswd \
- && chown jenkins:jenkins /home/jenkins -R \
+ && chown jenkins:fleis /home/jenkins -R \
  && ulimit -v unlimited
 
 RUN apt-get autoremove \
