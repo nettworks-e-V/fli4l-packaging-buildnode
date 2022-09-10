@@ -1,4 +1,4 @@
-FROM nettworksevtooling/fli4l-packaging-container:latest
+FROM nettworksevtooling/fli4l-packaging-container:1.1
 MAINTAINER Yves Schumann <yves@eisfair.org>
 
 # Configuration for Jenkins swarm
@@ -39,7 +39,7 @@ RUN groupadd --gid ${GID} fleis \
 RUN apt-get autoremove \
  && apt-get update \
  && apt-get install -y \
-            default-jdk \
+        openjdk-17-jdk \
  && apt-get clean
 
 # Mount point for Jenkins .ssh folder
